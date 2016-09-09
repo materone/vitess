@@ -28,7 +28,6 @@ addons:
       - time
       # Optional dependency. Without a running syslog daemon, Vitess will keep complaining that it could not log events and spam the logs.
       - rsyslog
-  sauce_connect: true
 # Cache directories of dependencies which are built by bootstrap.sh
 cache:
   directories:
@@ -84,11 +83,10 @@ env:
     #       All our tests should be spread out as evenly as possible across these 5 slots.
     #       We should always utilize all 5 slots because the cost of the setup is high (up to one minute).
     # NOTE: Use "" if you specify a space separated list of multiple targets.
-    - TEST_MATRIX="-shard 0"
-    - TEST_MATRIX="-shard 1"
-    - TEST_MATRIX="-shard 2"
-    - TEST_MATRIX="-shard 3"
-    - TEST_MATRIX="-shard 4"
+    - env: TEST_MATRIX="-shard 0"
+    - env: TEST_MATRIX="-shard 4"
+      addons:
+        sauce_connect: true
 before_install:
   - travis/download_mariadb.sh
   - travis/php_init.sh
